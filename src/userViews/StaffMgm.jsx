@@ -26,6 +26,7 @@ function StaffMgm() {
         return {
           id: staff.id,
           name: staff.name,
+          type: staff.type,
           ground_id: staff.ground_id,
         };
       });
@@ -144,7 +145,7 @@ function StaffMgm() {
         <legend>Staff Details</legend>
       </div>
       <div className="mt-3 mb-5">
-        <Table striped bordered border="2" hover variant="light">
+        <Table style={{ opacity: "80%" }} striped bordered border="2" hover variant="light">
           <thead>
             <tr>
               <td>

@@ -196,9 +196,9 @@ function deleteConfirmHandler() {
     </div>
     <Divider className="mb-5" />
     <div>
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ opacity: "80%" }} component={Paper}>
       <Table sx={{ height: 760, minWidth: "100%" }} aria-label="custom pagination table">
-      <TableHead>
+      <TableHead sx={{ backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb" }}>
           <TableRow>
             <TableCell align="left"><b>Location ID</b></TableCell>
             <TableCell align="left"><b>Location Name</b></TableCell>

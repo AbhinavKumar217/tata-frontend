@@ -302,12 +302,12 @@ function Grounds() {
         </Dropdown>
       </div>
       <div>
-        <TableContainer component={Paper}>
+        <TableContainer sx={{ opacity: "85%" }} component={Paper}>
           <Table
             sx={{ height: 760, minWidth: "100%" }}
             aria-label="custom pagination table"
           >
-            <TableHead>
+            <TableHead sx={{ backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb" }}>
               <TableRow>
                 <TableCell align="center">
                   <b>Ground ID</b>

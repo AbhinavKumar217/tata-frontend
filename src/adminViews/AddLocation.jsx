@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Form, FloatingLabel, Dropdown } from "react-bootstrap";
-import { Button, Alert, AlertTitle } from "@mui/material";
+import { Grid, TextField, Button, Alert, AlertTitle } from "@mui/material";
 import { makeApiRequest } from "../helpers/ApiWrapper";
 
 function AddLocation() {
@@ -11,45 +11,24 @@ function AddLocation() {
   const [state, setState] = useState("State");
   const [country, setCountry] = useState("Country");
   const [show, setShow] = useState(false);
+  const [states, setStates] = useState([]);
 
-  const states = [
-    "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttarakhand",
-    "Uttar Pradesh",
-    "West Bengal",
-    "Andaman and Nicobar Islands",
-    "Chandigarh",
-    "Dadra and Nagar Haveli",
-    "Daman and Diu",
-    "Delhi",
-    "Lakshadweep",
-    "Puducherry",
-  ];
+  const fetchStates = async () => {
+    const endpoint = "/states/all";
+    const method = "GET";
+
+    try {
+      const response = await makeApiRequest(method, endpoint);
+      setStates(response);
+    } catch (error) {
+      console.error(error);
+      setShow(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchStates();
+  }, []);
 
   const countries = ["India", "Pittsburgh", "Austria", "Vienna", "Egypt"];
 
@@ -107,35 +86,23 @@ function AddLocation() {
         <legend>Add new Location</legend>
       </div>
       <Form>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Name"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+      <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </FloatingLabel>
-
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="City"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        </Grid>
+        
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
-        </FloatingLabel>
-
-        {/* <FloatingLabel controlId="floatingInput" label="state" className="mb-3">
-          <Form.Control type="text" value={state} onChange={(e) => setState(e.target.value)} />
-        </FloatingLabel> */}
+        </Grid>
 
         <div className="mb-5">
           <Dropdown data-bs-theme="dark">
@@ -180,18 +147,6 @@ function AddLocation() {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-
-        {/* <FloatingLabel
-          controlId="floatingInput"
-          label="country"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-        </FloatingLabel> */}
 
         <Button variant="outlined" type="button" onClick={addLocationHandler}>
           Submit

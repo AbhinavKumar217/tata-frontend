@@ -252,12 +252,12 @@ function RequestMgm() {
       <legend>Booking Requests</legend>
       </div>
       <div>
-        <TableContainer component={Paper}>
+        <TableContainer sx={{ opacity: "80%" }} component={Paper}>
           <Table
             sx={{ height: 760, minWidth: "150%" }}
             aria-label="custom pagination table"
           >
-            <TableHead>
+            <TableHead sx={{ backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb" }}>
               <TableRow>
                 <TableCell align="left">
                   <b>Booking ID</b>

@@ -5,8 +5,8 @@ import GlobalKeys from "../constants/Keys";
 import { logout } from "./AuthWrapper";
 import { useNavigate } from "react-router-dom";
 
-const accessToken = Cookies.get(GlobalKeys.AccessTokenKey);
-const refreshToken = Cookies.get(GlobalKeys.RefreshTokenKey);
+let accessToken = Cookies.get(GlobalKeys.AccessTokenKey);
+let refreshToken = Cookies.get(GlobalKeys.RefreshTokenKey);
 console.log(`Bearer ${accessToken}`);
 console.log(`Refresh ${refreshToken}`);
 
@@ -38,9 +38,11 @@ export const makeApiRequest = async (
   } catch (error) {
     if (error.response && error.response.status === 401) {
       try {
-        
-        const newAccessToken = await exchangeToken();
-        console.log(newAccessToken);
+        accessToken = await exchangeToken();
+        console.log(accessToken);
+        // const newAccessToken = await exchangeToken();
+        // console.log(newAccessToken);
+
         // Retry the original request with the new access token
         const retryResponse = await api.request({
           method,
@@ -48,9 +50,10 @@ export const makeApiRequest = async (
           data,
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${newAccessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
+        console.log(accessToken);
         return retryResponse.data;
       } catch (refreshError) {
         throw refreshError; // Throw the refresh token error if token refresh fails

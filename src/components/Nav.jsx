@@ -127,14 +127,15 @@ function Nav() {
   );
 
   return (
-    <nav className="navbar navbar-expand navbar-dark bg-dark">
+    <>
+    <nav className="navbar navbar-expand navbar-light" style={{backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb", opacity: "70%"}}>
       <div className="container-fluid">
         <div>
-          <a className="navbar-brand">TATA-STEEL</a>
+          <a className="navbar-brand"><b>TATA-STEEL</b></a>
           <span>
             {["left"].map((anchor) => (
               <React.Fragment key={anchor}>
-                <Button onClick={toggleDrawer(anchor, true)}>MENU</Button>
+                <Button variant="outlined" onClick={toggleDrawer(anchor, true)}>MENU</Button>
                 <Drawer
                   anchor={anchor}
                   open={state[anchor]}
@@ -148,14 +149,15 @@ function Nav() {
         </div>
         <div className="navbar-nav">
           <NavLink to="/" className="nav-item nav-link">
-            <Button>Home</Button>
+            <Button variant="outlined">Home</Button>
           </NavLink>
           <NavLink to="/login" className="nav-item nav-link">
-            <Button onClick={() => logoutHandle()}>Logout</Button>
+            <Button variant="outlined" onClick={() => logoutHandle()}>Logout</Button>
           </NavLink>
         </div>
       </div>
     </nav>
+  </>
   );
 }
 

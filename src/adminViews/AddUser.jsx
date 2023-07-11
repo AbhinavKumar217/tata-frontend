@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FloatingLabel, Form, Dropdown } from "react-bootstrap";
 import { Button } from "@mui/material";
 import { Alert, AlertTitle } from "@mui/material";
+import { makeApiRequest } from "../helpers/ApiWrapper";
 
 function AddUser() {
   const [username, setUsername] = useState(" User Name ");
@@ -17,23 +18,40 @@ function AddUser() {
   const [locations, setLocations] = useState([]);
   const [location_name, setLocation_name] = useState("Location Name");
 
-  useEffect(() => {
-    axios.get("https://localhost:7270/api/location/all").then((response) => {
-      setLocations(response.data);
-    })
-    .catch((error) => {
-      setShow(true)
-    })
-  }, []);
+  const fetchLocations = async () => {
+    const endpoint = "/location/all";
+    const method = "GET";
 
-  const rows = []
+    try {
+      const response = await makeApiRequest(method, endpoint);
+      const locationsData = response.map((location) => {
+        return {
+          id: location.id,
+          name: location.name,
+          city: location.city,
+          state: location.state,
+          country: location.country,
+        };
+      });
+      setLocations(locationsData);
+    } catch (error) {
+      console.error(error);
+      setShow(true);
+    }
+  };
+
+  useEffect(() => {
+    fetchLocations();
+  }, [location_id]);
+
+  const rows = [];
   for (let i = 0; i < locations.length; i++) {
     rows[i] = locations[i];
   }
 
   function dropdownLocationHandle(locid, locname) {
-    setLocation_id(locid)
-    setLocation_name(locname)
+    setLocation_id(locid);
+    setLocation_name(locname);
   }
 
   function AlertDismissibleExample() {
@@ -41,9 +59,7 @@ function AddUser() {
       return (
         <Alert severity="error" onClose={() => setShow(false)} dismissible>
           <AlertTitle>Error</AlertTitle>
-          <p>
-            Request cannot be processed
-          </p>
+          <p>Request cannot be processed</p>
         </Alert>
       );
     }
@@ -91,7 +107,7 @@ function AddUser() {
           });
       })
       .catch((error) => {
-        setShow(true)
+        setShow(true);
       });
   }
 
@@ -99,72 +115,108 @@ function AddUser() {
     <div>
       <AlertDismissibleExample />
       <div className="text-center alert alert-info">
-      <legend>Add new User</legend>
+        <legend>Add new User</legend>
       </div>
       <Form>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="User Name"
           className="mb-3"
         >
-          <Form.Control type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </FloatingLabel>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="First Name"
           className="mb-3"
         >
-          <Form.Control type="text" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
+          />
         </FloatingLabel>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="Last Name"
           className="mb-3"
         >
-          <Form.Control type="text" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={lastname}
+            onChange={(e) => setLastname(e.target.value)}
+          />
         </FloatingLabel>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="Email"
           className="mb-3"
         >
-          <Form.Control type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </FloatingLabel>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="Password"
           className="mb-3"
         >
-          <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </FloatingLabel>
-        <FloatingLabel style={{maxWidth:"40%"}}
+        <FloatingLabel
+          style={{ maxWidth: "40%" }}
           controlId="floatingInput"
           label="Role"
           className="mb-3"
         >
-          <Form.Control type="text" value={role} onChange={(e) => setRole(e.target.value)} />
+          <Form.Control
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          />
         </FloatingLabel>
         <div className="mb-5">
-        <Dropdown data-bs-theme="dark">
-        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-          {location_name}
-        </Dropdown.Toggle>
+          <Dropdown data-bs-theme="dark">
+            <Dropdown.Toggle
+              id="dropdown-button-dark-example1"
+              variant="secondary"
+            >
+              {location_name}
+            </Dropdown.Toggle>
 
-        <Dropdown.Menu style={{maxHeight:"280px", overflow:"auto"}}>
-          {rows.map((row) => (
-            <Dropdown.Item key={row.id} onClick={() => dropdownLocationHandle(row.id, row.name)}>
-            {row.name}
-          </Dropdown.Item>
-          ))}
-        </Dropdown.Menu> 
-      </Dropdown>
-          </div>
+            <Dropdown.Menu style={{ maxHeight: "280px", overflow: "auto" }}>
+              {rows.map((row) => (
+                <Dropdown.Item
+                  key={row.id}
+                  onClick={() => dropdownLocationHandle(row.id, row.name)}
+                >
+                  {row.name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
         <Button type="button" variant="outlined" onClick={addUserHandler}>
           Submit
         </Button>
       </Form>
     </div>
-  )
+  );
 }
 
-export default AddUser
+export default AddUser;

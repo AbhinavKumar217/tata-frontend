@@ -3,11 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FloatingLabel, Form, Dropdown } from "react-bootstrap";
-import { Button } from "@mui/material";
-import { Alert, AlertTitle } from "@mui/material";
+import { Grid, TextField, Button, Alert, AlertTitle } from "@mui/material";
 
 function AddGround() {
-  const [name, setName] = useState(" Ground Name ");
+  const [name, setName] = useState("");
   const [location_id, setLocation_id] = useState();
   const [items, setItems] = useState([]);
   const [staff, setStaff] = useState([]);
@@ -98,42 +97,33 @@ function AddGround() {
         <legend>Add new Ground</legend>
       </div>
       <Form>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Ground Name"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Ground Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </FloatingLabel>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Required Items [eg:1,2,3]"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        </Grid>
+
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Required Items [eg:1,2,3]"
             value={items}
             onChange={(e) => setItems(e.target.value.split(",").map(Number))}
           />
-        </FloatingLabel>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Request Staff [eg:1,2,3]"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        </Grid>
+        
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Request Staff [eg:1,2,3]"
             value={staff}
             onChange={(e) => setStaff(e.target.value.split(",").map(Number))}
           />
-        </FloatingLabel>
+        </Grid>
+        
         <div className="mb-5">
           <Dropdown data-bs-theme="dark">
             <Dropdown.Toggle

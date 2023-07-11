@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FloatingLabel, Form, Dropdown } from "react-bootstrap";
-import { Button } from "@mui/material";
-import { Alert, AlertTitle } from "@mui/material";
+import { Grid, TextField, Button, Alert, AlertTitle } from "@mui/material";
 import { makeApiRequest } from "../helpers/ApiWrapper";
 
 function AddItem() {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [sub_type, setSub_type] = useState("");
-  const [price, setPrice] = useState(100.0);
+  const [price, setPrice] = useState();
   const [ground_id, setGround_id] = useState();
   const [ground_name, setGround_name] = useState("Ground Name");
   const [show, setShow] = useState(false);
@@ -74,7 +73,7 @@ function AddItem() {
         name: name,
         type: type,
         sub_type: sub_type,
-        price: price,
+        price: parseInt(price),
         ground_id: ground_id,
       };
 
@@ -97,54 +96,43 @@ function AddItem() {
         <legend>Add new Item</legend>
       </div>
       <Form>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Item Name"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Item Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </FloatingLabel>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Item Type"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        </Grid>
+
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Item Type"
             value={type}
             onChange={(e) => setType(e.target.value)}
           />
-        </FloatingLabel>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Item Sub-Type"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        </Grid>
+    
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Item Sub-Type"
             value={sub_type}
             onChange={(e) => setSub_type(e.target.value)}
           />
-        </FloatingLabel>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Item Price"
-          className="mb-3"
-        >
-          <Form.Control
+        </Grid>
+        
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
             type="number"
+            sx={{ minWidth: "35%" }}
+            label="Item Price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
-        </FloatingLabel>
+        </Grid>
+        
         <div className="mb-5">
           <Dropdown data-bs-theme="dark">
             <Dropdown.Toggle

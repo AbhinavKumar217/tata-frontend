@@ -50,7 +50,7 @@ const LoginPage = () => {
       Cookies.set(GlobalKeys.AccessTokenKey, access_token);
       Cookies.set("user", JSON.stringify(userDetails));
       Cookies.set("loggedInStatus", true);
-      navigate("/locations");
+      navigate("/");
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -67,13 +67,16 @@ const LoginPage = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
+          backgroundColor: "white",
         }}
       >
+        
         <Container maxWidth="xs">
+        
           <Paper elevation={3} style={{ padding: 24 }}>
-            <Typography variant="h5" align="center" gutterBottom>
-              Login
-            </Typography>
+          <Typography variant="h3" align="center" gutterBottom>
+          Login
+        </Typography>
             <form style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <TextField
                 label="Username"

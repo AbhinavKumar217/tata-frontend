@@ -211,7 +211,9 @@ function Users() {
         </div>
       </div>
       <div>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper}
+        sx={{ opacity: "85%" }}
+        >
           <Table
             sx={{ height: 760, minWidth: "100%" }}
             aria-label="custom pagination table"

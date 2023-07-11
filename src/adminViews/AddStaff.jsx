@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FloatingLabel, Form, Dropdown } from "react-bootstrap";
-import { Button } from "@mui/material";
-import { Alert, AlertTitle } from "@mui/material";
+import {  } from "@mui/material";
+import { Button, Grid, TextField, Alert, AlertTitle } from "@mui/material";
 import { makeApiRequest } from "../helpers/ApiWrapper";
 
 function AddStaff() {
@@ -99,18 +99,14 @@ function AddStaff() {
         <legend>Add new Staff</legend>
       </div>
       <Form>
-        <FloatingLabel
-          style={{ maxWidth: "40%" }}
-          controlId="floatingInput"
-          label="Staff Name"
-          className="mb-3"
-        >
-          <Form.Control
-            type="text"
+        <Grid className="mb-5" item xs={12} sm={6}>
+          <TextField
+            sx={{ minWidth: "35%" }}
+            label="Staff Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </FloatingLabel>
+        </Grid>
         <div className="mb-5">
           <Dropdown data-bs-theme="dark">
             <Dropdown.Toggle
