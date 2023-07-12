@@ -23,6 +23,8 @@ function Nav() {
 
   function logoutHandle() {
     logout();
+    navigate("/login");
+    window.location.reload();
   }
 
   const [state, setState] = React.useState({
@@ -50,9 +52,12 @@ function Nav() {
         {
           <>
             <ListItem className="text-center">
-              <a className="navbar-brand text-center">TATA-STEEL</a>
+              <span className="navbar-brand text-center">TATA-STEEL</span>
             </ListItem>
-            <Divider />
+            <Divider className="mb-3" />
+            <ListItem className="text-center">
+              <span className="navbar-brand text-center">User Panel</span>
+            </ListItem>
             <ListItem>
               <NavLink to="/locations">
                 <ListItemButton>
@@ -90,6 +95,10 @@ function Nav() {
       <List>
         {
           <>
+            <Divider className="mb-3" />
+            <ListItem className="text-center">
+              <span className="navbar-brand text-center">Admin Panel</span>
+            </ListItem>
             <ListItem>
               <NavLink to="/staff">
                 <ListItemButton>
@@ -111,6 +120,16 @@ function Nav() {
               </NavLink>
             </ListItem>
             <ListItem>
+              <NavLink to="/users">
+                <ListItemButton>
+                  <ListItemIcon>
+                    <InboxIcon />
+                  </ListItemIcon>
+                  <ListItemText>Users</ListItemText>
+                </ListItemButton>
+              </NavLink>
+            </ListItem>
+            <ListItem>
               <NavLink to="/approvereq">
                 <ListItemButton>
                   <ListItemIcon>
@@ -128,36 +147,51 @@ function Nav() {
 
   return (
     <>
-    <nav className="navbar navbar-expand navbar-light" style={{backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb", opacity: "70%"}}>
-      <div className="container-fluid">
-        <div>
-          <a className="navbar-brand"><b>TATA-STEEL</b></a>
-          <span>
-            {["left"].map((anchor) => (
-              <React.Fragment key={anchor}>
-                <Button variant="outlined" onClick={toggleDrawer(anchor, true)}>MENU</Button>
-                <Drawer
-                  anchor={anchor}
-                  open={state[anchor]}
-                  onClose={toggleDrawer(anchor, false)}
-                >
-                  {list(anchor)}
-                </Drawer>
-              </React.Fragment>
-            ))}
-          </span>
+      <nav
+        className="navbar navbar-expand navbar-light"
+        style={{
+          backgroundColor: "#d1ecf1",
+          borderRadius: "5px",
+          borderColor: "#bee5eb",
+          opacity: "70%",
+        }}
+      >
+        <div className="container-fluid">
+          <div>
+            <span className="navbar-brand">
+              <b>TATA-STEEL</b>
+            </span>
+            <span>
+              {["left"].map((anchor) => (
+                <React.Fragment key={anchor}>
+                  <Button
+                    variant="outlined"
+                    onClick={toggleDrawer(anchor, true)}
+                  >
+                    MENU
+                  </Button>
+                  <Drawer
+                    anchor={anchor}
+                    open={state[anchor]}
+                    onClose={toggleDrawer(anchor, false)}
+                  >
+                    {list(anchor)}
+                  </Drawer>
+                </React.Fragment>
+              ))}
+            </span>
+          </div>
+          <div className="navbar-nav">
+            <NavLink to="/" className="nav-item nav-link">
+              <Button variant="outlined">Home</Button>
+            </NavLink>
+            <Button variant="outlined" onClick={() => logoutHandle()}>
+              Logout
+            </Button>
+          </div>
         </div>
-        <div className="navbar-nav">
-          <NavLink to="/" className="nav-item nav-link">
-            <Button variant="outlined">Home</Button>
-          </NavLink>
-          <NavLink to="/login" className="nav-item nav-link">
-            <Button variant="outlined" onClick={() => logoutHandle()}>Logout</Button>
-          </NavLink>
-        </div>
-      </div>
-    </nav>
-  </>
+      </nav>
+    </>
   );
 }
 

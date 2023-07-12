@@ -35,7 +35,7 @@ function Grounds() {
   const [groundtoDelete, setGroundToDelete] = useState(0);
   const [show, setShow] = useState(false);
   const [locations, setLocations] = useState([]);
-  const [locationName, setLocationName] = useState("Location Name");
+  const [locationName, setLocationName] = useState("ALL LOCATIONS");
 
   function AlertDismissibleExample() {
     if (show) {
@@ -61,7 +61,7 @@ function Grounds() {
           id: ground.id,
           name: ground.name,
           location_id: ground.location_id,
-          location_name: ground.location.name,
+          location_name: ground.location.city,
           items: ground.items,
         };
       });
@@ -178,7 +178,6 @@ function Grounds() {
   }
 
   function deleteConfirmHandler() {
-
     const deleteGround = async () => {
       const endpoint = "/grounds/delete";
       const method = "POST";
@@ -200,7 +199,6 @@ function Grounds() {
       }
     };
     deleteGround();
-
   }
 
   const fetchLocations = async () => {
@@ -241,16 +239,16 @@ function Grounds() {
     const fetchGroundsByLocationID = async () => {
       const endpoint = `/grounds/location/${locationid}`;
       const method = "GET";
-  
+
       try {
         const response = await makeApiRequest(method, endpoint);
         const groundsData = response.map((ground) => {
           return {
             id: ground.id,
-          name: ground.name,
-          location_id: ground.location_id,
-          location_name: ground.location.name,
-          items: ground.items,
+            name: ground.name,
+            location_id: ground.location_id,
+            location_name: ground.location.name,
+            items: ground.items,
           };
         });
         setGrounds(groundsData);
@@ -290,9 +288,9 @@ function Grounds() {
             {rows2.map((row2) => (
               <Dropdown.Item
                 key={row2.id}
-                onClick={() => dropdownClickHandle(row2.id, row2.name)}
+                onClick={() => dropdownClickHandle(row2.id, row2.city)}
               >
-                {row2.name}
+                {row2.city}
               </Dropdown.Item>
             ))}
             <Dropdown.Item onClick={() => window.location.reload()}>
@@ -307,7 +305,13 @@ function Grounds() {
             sx={{ height: 760, minWidth: "100%" }}
             aria-label="custom pagination table"
           >
-            <TableHead sx={{ backgroundColor: "#d1ecf1", borderRadius: "5px", borderColor: "#bee5eb" }}>
+            <TableHead
+              sx={{
+                backgroundColor: "#d1ecf1",
+                borderRadius: "5px",
+                borderColor: "#bee5eb",
+              }}
+            >
               <TableRow>
                 <TableCell align="center">
                   <b>Ground ID</b>

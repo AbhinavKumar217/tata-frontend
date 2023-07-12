@@ -202,9 +202,6 @@ function Users() {
         closeConfirmDeletePopupHandler={closeConfirmDeletePopupHandler}
         deleteConfirmHandler={deleteConfirmHandler}
       />
-      <div>
-        <h3>Welcome to the Landing page.</h3>
-      </div>
       <div className="text-center pt-3 pb-3">
         <div className="text-center alert alert-info">
           <h2>Users Database</h2>

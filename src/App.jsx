@@ -28,6 +28,8 @@ import LandingPage from "./userViews/LandingPage";
 import SelectedGroundReq from "./userViews/SelectedGroundReq";
 
 function App() {
+  const userCookie = Cookies.get("user");
+  const user = userCookie ? JSON.parse(userCookie) : null;
   return (
     <>
       <div
@@ -37,7 +39,7 @@ function App() {
           minHeight: "100vh",
         }}
       >
-        <div
+        {/* <div
           className="background-image"
           style={{
             position: "absolute",
@@ -52,61 +54,219 @@ function App() {
             backgroundPosition: "center",
             transform: "rotate(180deg)",
           }}
-        />
-        <Nav />
+        /> */}
+        {user && <Nav />}
         <Routes>
-          <Route path="/users" element={<Users />} />
+          <Route
+            path="/users"
+            element={
+              <AdminRoute>
+                <Users />
+              </AdminRoute>
+            }
+          />
 
           <Route path="*" element={<Navigate to="/" />} />
 
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/locations" element={<Locations />} />
+          <Route
+            path="/locations"
+            element={
+              <ProtectedRoute>
+                <Locations />
+              </ProtectedRoute>
+            }
+          />
 
-          {/* <Route
-              path="/locations"
-              element={
-                <ProtectedRoute>
-                  <Locations />
-                </ProtectedRoute>
-              }
-            /> */}
+          <Route
+            path="/grounds"
+            element={
+              <ProtectedRoute>
+                <Grounds />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/grounds" element={<Grounds />} />
+          {/* <Route path="/grounds" element={<Grounds />} /> */}
 
-          <Route path="/addreq" element={<AddRequest />} />
+          <Route
+            path="/addreq"
+            element={
+              <ProtectedRoute>
+                <AddRequest />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/approvereq" element={<RequestMgm />} />
+          {/* <Route path="/addreq" element={<AddRequest />} /> */}
 
-          <Route path="/item" element={<ItemMgm />} />
+          {/* <Route path="/approvereq" element={<RequestMgm />} /> */}
 
-          <Route path="/staff" element={<StaffMgm />} />
+          <Route
+            path="/approvereq"
+            element={
+              <AdminRoute>
+                <RequestMgm />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/addlocation" element={<AddLocation />} />
+          {/* <Route path="/item" element={<ItemMgm />} /> */}
 
-          <Route path="/addground" element={<AddGround />} />
+          <Route
+            path="/item"
+            element={
+              <AdminRoute>
+                <ItemMgm />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/updateground/:id" element={<UpdateGround />} />
+          {/* <Route path="/staff" element={<StaffMgm />} /> */}
 
-          <Route path="/updatestaff/:id" element={<UpdateStaff />} />
+          <Route
+            path="/staff"
+            element={
+              <AdminRoute>
+                <StaffMgm />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/addstaff" element={<AddStaff />} />
+          {/* <Route path="/addlocation" element={<AddLocation />} /> */}
 
-          <Route path="/updatelocation/:id" element={<UpdateLocation />} />
+          <Route
+            path="/addlocation"
+            element={
+              <AdminRoute>
+                <AddLocation />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/additem" element={<AddItem />} />
+          {/* <Route path="/addground" element={<AddGround />} /> */}
 
-          <Route path="/updateitem/:id" element={<UpdateItem />} />
+          <Route
+            path="/addground"
+            element={
+              <AdminRoute>
+                <AddGround />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/updateuser/:id" element={<UpdateUser />} />
+          {/* <Route path="/updateground/:id" element={<UpdateGround />} /> */}
+
+          <Route
+            path="/updateground/:id"
+            element={
+              <AdminRoute>
+                <UpdateGround />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/updatestaff/:id" element={<UpdateStaff />} /> */}
+
+          <Route
+            path="/updatestaff/:id"
+            element={
+              <AdminRoute>
+                <UpdateStaff />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/addstaff" element={<AddStaff />} /> */}
+
+          <Route
+            path="/addstaff"
+            element={
+              <AdminRoute>
+                <AddStaff />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/updatelocation/:id" element={<UpdateLocation />} /> */}
+
+          <Route
+            path="/updatelocation/:id"
+            element={
+              <AdminRoute>
+                <UpdateLocation />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/additem" element={<AddItem />} /> */}
+
+          <Route
+            path="/additem"
+            element={
+              <AdminRoute>
+                <AddItem />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/updateitem/:id" element={<UpdateItem />} /> */}
+
+          <Route
+            path="/updateitem/:id"
+            element={
+              <AdminRoute>
+                <UpdateItem />
+              </AdminRoute>
+            }
+          />
+
+          {/* <Route path="/updateuser/:id" element={<UpdateUser />} /> */}
+
+          <Route
+            path="/updateuser/:id"
+            element={
+              <AdminRoute>
+                <UpdateUser />
+              </AdminRoute>
+            }
+          />
 
           {/* <AdminRoute path="/adduser" element={<AddUser />} /> */}
 
-          <Route path="/adduser" element={<AddUser />} />
+          {/* <Route path="/adduser" element={<AddUser />} /> */}
 
-          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/adduser"
+            element={
+              <AdminRoute>
+                <AddUser />
+              </AdminRoute>
+            }
+          />
 
-          <Route path="/groundreq/:id" element={<SelectedGroundReq />} />
+          {/* <Route path="/" element={<LandingPage />} /> */}
+
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <LandingPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/groundreq/:id"
+            element={
+              <ProtectedRoute>
+                <SelectedGroundReq />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* <Route path="/groundreq/:id" element={<SelectedGroundReq />} /> */}
         </Routes>
       </div>
     </>

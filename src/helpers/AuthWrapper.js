@@ -48,6 +48,6 @@ export const logout = () => {
     Cookies.set("user", null);
     Cookies.set("loggedInStatus", false);
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };

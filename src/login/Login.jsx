@@ -48,7 +48,7 @@ const LoginPage = () => {
       } = userDetails;
       Cookies.set(GlobalKeys.RefreshTokenKey, refresh_token);
       Cookies.set(GlobalKeys.AccessTokenKey, access_token);
-      Cookies.set("user", JSON.stringify(userDetails));
+      Cookies.set("user", JSON.stringify(userDetails.user));
       Cookies.set("loggedInStatus", true);
       navigate("/");
       window.location.reload();
@@ -60,6 +60,29 @@ const LoginPage = () => {
 
   return (
     <>
+    <div
+        className="app-container pb-5 pl-1 pr-1"
+        style={{
+          position: "relative",
+          minHeight: "100vh",
+        }}
+      >
+        <div
+          className="background-image"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage:
+              'url("https://img.freepik.com/free-vector/network-mesh-wire-digital-technology-background_1017-27428.jpg?w=1380&t=st=1688619913~exp=1688620513~hmac=8bf038cfce973b8a8f16a589304c732318ce1e319988b009553e37845b7a3898")',
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            transform: "rotate(180deg)",
+          }}
+        />
       <AlertDismissibleExample />
       <div
         style={{
@@ -103,6 +126,7 @@ const LoginPage = () => {
             </form>
           </Paper>
         </Container>
+      </div>
       </div>
     </>
   );

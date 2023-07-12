@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link, Navigate, redirect } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Link,
+  Navigate,
+  redirect,
+  useNavigate,
+} from "react-router-dom";
 import Cookies from "js-cookie";
 import GlobalKeys from "../constants/Keys";
 
 function ProtectedRoute({ children }) {
-  const [authenticated, setAuthenticated] = useState(false);
+  const navigate = useNavigate();
+  const userCookie = Cookies.get("user");
+  const user = userCookie ? JSON.parse(userCookie) : null;
+  const authenticated = user != null;
+  console.log(user);
 
   useEffect(() => {
-    const user = JSON.parse(Cookies.get("user"));
-    console.log(user.access_token);
-    if (user.access_token) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
+    if (!authenticated) {
+      navigate("/login");
     }
-  }, [authenticated]);
+  }, []);
 
-  if (!authenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
+  return authenticated ? children : "";
 }
 
 export default ProtectedRoute;

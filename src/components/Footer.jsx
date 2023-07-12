@@ -10,7 +10,7 @@ function Footer() {
       >
         <div className="container-fluid">
           <div>
-            <a className="navbar-brand">TATA-STEEL</a>
+            <span className="navbar-brand">TATA-STEEL</span>
           </div>
           <div className="navbar-nav">
             <NavLink to="/" className="nav-item nav-link">
